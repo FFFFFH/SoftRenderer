@@ -36,7 +36,7 @@ namespace SoftRenderer
 
         public void DrawLine(Vector3 p0, Vector3 p1, Color color)
         {
-            DrawLine(new Point((int)p0.X, (int)p0.Y), new Point((int)p1.X, (int)p1.Y), color);
+            DrawLine(new Point(Screen.width / 2 + (int)(p0.X * Screen.width/2), Screen.height/2 - (int)(p0.Y * Screen.height/2)), new Point(Screen.width / 2 + (int)(p1.X * Screen.width/2), Screen.height/2 - (int)(p1.Y * Screen.height/2)), color);
         }
 
         public void DrawPoint(int x, int y, Color color)

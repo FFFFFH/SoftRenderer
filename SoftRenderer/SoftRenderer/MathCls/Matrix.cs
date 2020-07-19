@@ -217,13 +217,21 @@ namespace SoftRenderer
             return Values?.GetHashCode() ?? 0;
         }
 
-        public Vector3 ApplyTransfer(Vector3 v)
+        public Vector3 ApplyTransfer(Vector3 v, bool div = false)
         {
             var x = v.X * Values[0 * 4 + 0] + v.Y * Values[1 * 4 + 0] + v.Z * Values[2 * 4 + 0] + Values[3 * 4 + 0];
             var y = v.X * Values[0 * 4 + 1] + v.Y * Values[1 * 4 + 1] + v.Z * Values[2 * 4 + 1] + Values[3 * 4 + 1];
             var z = v.X * Values[0 * 4 + 2] + v.Y * Values[1 * 4 + 2] + v.Z * Values[2 * 4 + 2] + Values[3 * 4 + 2];
             var w = v.X * Values[0 * 4 + 3] + v.Y * Values[1 * 4 + 3] + v.Z * Values[2 * 4 + 3] + Values[3 * 4 + 3];
-            return new Vector3(x / w, y / w, z / w);
+            //return new Vector3(x / w, y / w, z / w);
+            if (div)
+            {
+                return new Vector3(x / w, y / w, z / w);
+            }
+            else
+            {
+                return new Vector3(x, y, z);
+            }
         }
     }
 }

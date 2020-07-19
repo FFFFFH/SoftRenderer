@@ -15,8 +15,7 @@ namespace SoftRenderer
     {
         public Form form; //窗口
         private GraphicsBuffer buffer; //双缓冲
-        private const int width = 1024;
-        private const int height = 512;
+    
         private Font defaultFont;
         private const int targetFPS = 30;
         private readonly TimeSpan maxElapsedTime = TimeSpan.FromMilliseconds(1000.0 / targetFPS);
@@ -31,10 +30,10 @@ namespace SoftRenderer
         {
             form = new Form()
             {
-                Size = new Size(1024, 512),
+                Size = new Size(Screen.width, Screen.height),
                 StartPosition = FormStartPosition.CenterScreen
             };
-            buffer = new GraphicsBuffer(width, height);
+            buffer = new GraphicsBuffer(Screen.width, Screen.height);
             defaultFont = new Font(FontFamily.GenericMonospace, 15);
         }
 
@@ -95,12 +94,45 @@ namespace SoftRenderer
 
         public MeshRenderer CreateMeshRenderer()
         {
-            Mesh mesh = CreateMesh();
+            Mesh mesh = CreateMesh1();
             Transform trans = new Transform();
-            trans.position = new Vector3(0, 0, -1);
+            trans.position = new Vector3(0, 0, 0);
             trans.rotationAngle = new Vector3(0, 0, 0);
-            MeshRenderer meshRenderer = new MeshRenderer(trans,mesh);
+            trans.localScale = new Vector3(2, 2, 2); 
+            MeshRenderer meshRenderer = new MeshRenderer(trans, mesh);
             return meshRenderer;
+        }
+
+        private Mesh CreateMesh1()
+        {
+            Vector3[] vects = new Vector3[6];
+            vects[0] = new Vector3(-0.5f, -0.5f, 0);
+            vects[1] = new Vector3(0.5f, -0.5f, 0);
+            vects[2] = new Vector3(0.5f, 0.5f, 0);
+            vects[3] = new Vector3(-0.5f, 0.5f, 0);
+
+            vects[4] = new Vector3(0.5f, 0, 0.5f);
+            vects[5] = new Vector3(0.5f, 1, 0.5f);
+
+
+            Surface[] surfaces = new Surface[2];
+            surfaces[0].A = 0;
+            surfaces[0].B = 1;
+            surfaces[0].C = 2;
+
+            surfaces[1].A = 0;
+            surfaces[1].B = 2;
+            surfaces[1].C = 3;
+
+            //surfaces[2].A = 1;
+            //surfaces[2].B = 4;
+            //surfaces[2].C = 5;
+
+            //surfaces[3].A = 1;
+            //surfaces[3].B = 5;
+            //surfaces[3].C = 2;
+
+            return new Mesh(vects, surfaces);
         }
 
         private Mesh CreateMesh()
@@ -115,11 +147,10 @@ namespace SoftRenderer
             vects[6] = new Vector3(-1, -1, 1);
             vects[7] = new Vector3(-1, 1, 1);
 
-            Surface[] surfaces = new Surface[8];
+            Surface[] surfaces = new Surface[12];
             surfaces[0].A = 0;
             surfaces[0].B = 1;
             surfaces[0].C = 2;
-
             surfaces[1].A = 0;
             surfaces[1].B = 2;
             surfaces[1].C = 3;
@@ -127,7 +158,6 @@ namespace SoftRenderer
             surfaces[2].A = 1;
             surfaces[2].B = 4;
             surfaces[2].C = 5;
-
             surfaces[3].A = 1;
             surfaces[3].B = 5;
             surfaces[3].C = 2;
@@ -135,7 +165,6 @@ namespace SoftRenderer
             surfaces[4].A = 4;
             surfaces[4].B = 6;
             surfaces[4].C = 7;
-
             surfaces[5].A = 4;
             surfaces[5].B = 7;
             surfaces[5].C = 5;
@@ -143,10 +172,24 @@ namespace SoftRenderer
             surfaces[6].A = 6;
             surfaces[6].B = 0;
             surfaces[6].C = 3;
-
             surfaces[7].A = 6;
             surfaces[7].B = 3;
             surfaces[7].C = 7;
+
+            surfaces[8].A = 3;
+            surfaces[8].B = 2;
+            surfaces[8].C = 5;
+            surfaces[9].A = 3;
+            surfaces[9].B = 5;
+            surfaces[9].C = 7;
+
+            surfaces[10].A = 1;
+            surfaces[10].B = 0;
+            surfaces[10].C = 4;
+            surfaces[11].A = 0;
+            surfaces[11].B = 6;
+            surfaces[11].C = 4;
+
 
             Mesh mesh = new Mesh(vects, surfaces);
             return mesh;
