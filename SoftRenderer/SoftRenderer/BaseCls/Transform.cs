@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoftRenderer
 {
-    //目前此类的父类是世界结点，
-    //后面考虑加入自定义父节点
+    //目前此类的父类是世界结点，可以拓展为自定义父节点
     public class Transform
     {
         private Vector3 m_Position;
@@ -21,7 +20,7 @@ namespace SoftRenderer
                 m_Position = value;
                 UpdateMatrix();
             }
-            get => m_Position;
+            get => m_Position.Copy();
         }
 
         private Vector3 m_RotationAngle;
@@ -35,7 +34,7 @@ namespace SoftRenderer
                 m_RotationAngle = value;
                 UpdateMatrix();
             }
-            get => m_RotationAngle;
+            get => m_RotationAngle.Copy();
         }
 
         private Vector3 m_LocalScale;
@@ -48,7 +47,7 @@ namespace SoftRenderer
                 m_LocalScale = value;
                 UpdateMatrix();
             }
-            get => m_LocalScale;
+            get => m_LocalScale.Copy();
         }
 
         public Matrix translateMatrix;
@@ -91,6 +90,8 @@ namespace SoftRenderer
 
         public Vector3 ApplyTransfer(Vector3 point)
         {
+            //return point.ApplyTransfer(object2world).ApplyTransfer(world2View).ApplyTransfer(viewToClip, true);
+
             Vector3 v1 = point.ApplyTransfer(object2world);
             Vector3 v2 = v1.ApplyTransfer(world2View);
             Vector3 v3 = v2.ApplyTransfer(viewToClip,true);

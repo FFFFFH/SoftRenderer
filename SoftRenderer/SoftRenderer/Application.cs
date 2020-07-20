@@ -20,6 +20,8 @@ namespace SoftRenderer
         private const int targetFPS = 30;
         private readonly TimeSpan maxElapsedTime = TimeSpan.FromMilliseconds(1000.0 / targetFPS);
         private Debug debug;
+        public static GraphicsDevice GraphicsDevice;
+        private static List<Renderer> Renderers = new List<Renderer>();
 
         public Application()
         {
@@ -44,18 +46,21 @@ namespace SoftRenderer
             var deltaTime = TimeSpan.FromMilliseconds(1000.0 / 60);
 
             Debug.Init(buffer.BackGroundGraphicsDevice);
-
+            GameLogic.Instance.Init();
             while (!form.IsDisposed)
             {
                 stopwatch.Start();
                 ClearBackground();
-                DrawFPS(deltaTime);
-                RenderMesh();
-
                 Debug.ClearLogs();
-                Debug.DoTest();
-                Debug.ShowLogs();
+                Application.GraphicsDevice = buffer.BackGroundGraphicsDevice;
 
+                GameLogic.Instance.Update();
+
+                Render(); 
+
+                DrawFPS(deltaTime);
+
+                Debug.ShowLogs();
                 buffer.SwapBuffers();
                 Present();
                 System.Windows.Forms.Application.DoEvents();
@@ -80,121 +85,6 @@ namespace SoftRenderer
                 defaultFont, Brushes.Black,0,0);
         }
 
-        public void RenderMesh()
-        {
-            MeshRenderer meshRenderer = CreateMeshRenderer();
-            meshRenderer.Render(buffer.BackGroundGraphicsDevice);
-
-            //var graphic = buffer.BackGroundGraphicsDevice;
-            //for (int i = 0; i < mesh.Vertices.Length; i+=3)
-            //{
-            //    graphic.DrawTriangle(mesh.Vertices[0], mesh.Vertices[1], mesh.Vertices[2],Color.Pink);
-            //}
-        }
-
-        public MeshRenderer CreateMeshRenderer()
-        {
-            Mesh mesh = CreateMesh1();
-            Transform trans = new Transform();
-            trans.position = new Vector3(0, 0, 0);
-            trans.rotationAngle = new Vector3(0, 0, 0);
-            trans.localScale = new Vector3(2, 2, 2); 
-            MeshRenderer meshRenderer = new MeshRenderer(trans, mesh);
-            return meshRenderer;
-        }
-
-        private Mesh CreateMesh1()
-        {
-            Vector3[] vects = new Vector3[6];
-            vects[0] = new Vector3(-0.5f, -0.5f, 0);
-            vects[1] = new Vector3(0.5f, -0.5f, 0);
-            vects[2] = new Vector3(0.5f, 0.5f, 0);
-            vects[3] = new Vector3(-0.5f, 0.5f, 0);
-
-            vects[4] = new Vector3(0.5f, 0, 0.5f);
-            vects[5] = new Vector3(0.5f, 1, 0.5f);
-
-
-            Surface[] surfaces = new Surface[2];
-            surfaces[0].A = 0;
-            surfaces[0].B = 1;
-            surfaces[0].C = 2;
-
-            surfaces[1].A = 0;
-            surfaces[1].B = 2;
-            surfaces[1].C = 3;
-
-            //surfaces[2].A = 1;
-            //surfaces[2].B = 4;
-            //surfaces[2].C = 5;
-
-            //surfaces[3].A = 1;
-            //surfaces[3].B = 5;
-            //surfaces[3].C = 2;
-
-            return new Mesh(vects, surfaces);
-        }
-
-        private Mesh CreateMesh()
-        {
-            Vector3[] vects = new Vector3[8];
-            vects[0] = new Vector3(-1, -1, -1);
-            vects[1] = new Vector3(1, -1, -1);
-            vects[2] = new Vector3(1, 1, -1);
-            vects[3] = new Vector3(-1, 1, -1);
-            vects[4] = new Vector3(1, -1, 1);
-            vects[5] = new Vector3(1, 1, 1);
-            vects[6] = new Vector3(-1, -1, 1);
-            vects[7] = new Vector3(-1, 1, 1);
-
-            Surface[] surfaces = new Surface[12];
-            surfaces[0].A = 0;
-            surfaces[0].B = 1;
-            surfaces[0].C = 2;
-            surfaces[1].A = 0;
-            surfaces[1].B = 2;
-            surfaces[1].C = 3;
-
-            surfaces[2].A = 1;
-            surfaces[2].B = 4;
-            surfaces[2].C = 5;
-            surfaces[3].A = 1;
-            surfaces[3].B = 5;
-            surfaces[3].C = 2;
-
-            surfaces[4].A = 4;
-            surfaces[4].B = 6;
-            surfaces[4].C = 7;
-            surfaces[5].A = 4;
-            surfaces[5].B = 7;
-            surfaces[5].C = 5;
-
-            surfaces[6].A = 6;
-            surfaces[6].B = 0;
-            surfaces[6].C = 3;
-            surfaces[7].A = 6;
-            surfaces[7].B = 3;
-            surfaces[7].C = 7;
-
-            surfaces[8].A = 3;
-            surfaces[8].B = 2;
-            surfaces[8].C = 5;
-            surfaces[9].A = 3;
-            surfaces[9].B = 5;
-            surfaces[9].C = 7;
-
-            surfaces[10].A = 1;
-            surfaces[10].B = 0;
-            surfaces[10].C = 4;
-            surfaces[11].A = 0;
-            surfaces[11].B = 6;
-            surfaces[11].C = 4;
-
-
-            Mesh mesh = new Mesh(vects, surfaces);
-            return mesh;
-        }
-
         public void ClearBackground()
         {
             var graphic = buffer.BackGroundGraphicsDevice;
@@ -206,6 +96,27 @@ namespace SoftRenderer
             using (var graphic = form.CreateGraphics())
             {
                 graphic.DrawImage(buffer.Current, Point.Empty);
+            }
+        }
+
+        public static void AddRenderer(Renderer renderer)
+        {
+            Renderers.Add(renderer);
+        }
+
+        private void Render()
+        {
+            //TODO:这里可以拓展为多个相机，根据每个相机CullingMask
+            //筛出要渲染的Render进行渲染
+            Camera camera = Camera.main;
+            for (int i = 0; i < Renderers.Count; i++)
+            {
+                Renderer renderer = Renderers[i];
+                if(!renderer.enable) continue;
+                var renderTrans = renderer.transform;
+                renderTrans.world2View = camera.GetWorldToView();
+                renderTrans.viewToClip = camera.GetPerspectiveMatrix();
+                renderer.Render();
             }
         }
     }

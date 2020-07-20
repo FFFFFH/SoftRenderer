@@ -162,6 +162,11 @@ namespace SoftRenderer
             return new Vector3(X * factor, Y * factor, Z * factor);
         }
 
+        public Vector3 Copy()
+        {
+            return new Vector3(X,Y,Z);
+        }
+
         public Vector3 ApplyTransfer(Matrix matrix, bool div = false)
         {
             return matrix.ApplyTransfer(this, div); 

@@ -101,10 +101,10 @@ namespace SoftRenderer
 
         public static Matrix RotationAngle(Vector3 r)
         {
-            r.X *= MathUtility.Angle2Rad;
-            r.Y *= MathUtility.Angle2Rad;
-            r.Z *= MathUtility.Angle2Rad;
-            return Rotation(r);
+            var x = r.X * MathUtility.Angle2Rad;
+            var y = r.Y * MathUtility.Angle2Rad;
+            var z = r.Z * MathUtility.Angle2Rad;
+            return Rotation(new Vector3(x,y,z));
         }
 
         public static Matrix RotationX(float rad)
@@ -193,7 +193,7 @@ namespace SoftRenderer
                 cot/aspect,  0,  0,  0,
                 0, cot, 0, 0,
                 0, 0, zFar/ (zFar - zNear), 1,
-                0,0,-zNear * zFar /(zFar - zNear),0
+                0, 0, zNear * zFar /(zNear - zFar), 0
             };
             return new Matrix(values);
         }
@@ -224,7 +224,7 @@ namespace SoftRenderer
             var z = v.X * Values[0 * 4 + 2] + v.Y * Values[1 * 4 + 2] + v.Z * Values[2 * 4 + 2] + Values[3 * 4 + 2];
             var w = v.X * Values[0 * 4 + 3] + v.Y * Values[1 * 4 + 3] + v.Z * Values[2 * 4 + 3] + Values[3 * 4 + 3];
             //return new Vector3(x / w, y / w, z / w);
-            if (div)
+            if (div && w != 0)
             {
                 return new Vector3(x / w, y / w, z / w);
             }

@@ -24,14 +24,6 @@ namespace SoftRenderer
             defaultFont = new Font(FontFamily.GenericMonospace, 15);
         }
         
-        public static void DoTest()
-        {
-            Vector3 v1 = new Vector3(0,1,1);
-            var m = Matrix.RotationXAngle(-90);  
-            var v2 = m.ApplyTransfer(v1);
-            Log(v2.ToString());
-        }
-
         public static void ShowLogs()
         {
             for (int i = 0; i < LogContentList.Count; i++)

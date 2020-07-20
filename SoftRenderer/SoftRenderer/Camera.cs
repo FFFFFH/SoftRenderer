@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SoftRenderer
 {
-    public class Camera
+    public class Camera : Component
     {
-        public Transform transform;
         private static Camera m_Main;
         public static Camera main
         {
@@ -16,20 +15,41 @@ namespace SoftRenderer
             {
                 if (m_Main == null)
                 {
-                    m_Main = new Camera();
+                    GameObject go = new GameObject("MainCamera");
+                    m_Main = go.AddComponent<Camera>();
                 }
                 return m_Main;
            }
         }
+
+
+        public Matrix GetWorldToView()
+        {
+            Vector3 cameraPos = transform.position;
+
+            //TODO: 由摄像机的朝向计算
+            Vector3 targetPos = new Vector3(0, 0, 0);
+
+            //TODO: 由摄像机的朝向计算
+            Vector3 upDir = new Vector3(0, 1, 0);
+
+            return Matrix.LookAtLH(cameraPos,
+                targetPos, upDir);
+        }
+
+        public Matrix GetPerspectiveMatrix()
+        {
+            return Matrix.PerspectiveFov(fov,aspect, nearPlane, farPlene);
+        }
+
         public Camera()
         {
-            transform = new Transform();
             aspect = Screen.width / Screen.height;
         }
 
         public float fov = 45f;
         public float aspect = 2;
-        public float nearPlane = 1;
+        public float nearPlane = 2;
         public float farPlene = 20;
 
     }
