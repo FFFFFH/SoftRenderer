@@ -41,9 +41,9 @@ namespace SoftRenderer
             var eyeZ = -axisZ.Dot(eye);
 
             return new Matrix(new[] {
-                axisX.X, axisY.X, axisZ.X, 0,
-                axisX.Y, axisY.Y, axisZ.Y, 0,
-                axisX.Z, axisY.Z, axisZ.Z, 0,
+                axisX.x, axisY.x, axisZ.x, 0,
+                axisX.y, axisY.y, axisZ.y, 0,
+                axisX.z, axisY.z, axisZ.z, 0,
                 eyeX, eyeY, eyeZ, 1
             });
         }
@@ -93,17 +93,17 @@ namespace SoftRenderer
 
         public static Matrix Rotation(Vector3 r)
         {
-            var x = RotationX(r.X);
-            var y = RotationY(r.Y);
-            var z = RotationZ(r.Z);
+            var x = RotationX(r.x);
+            var y = RotationY(r.y);
+            var z = RotationZ(r.z);
             return z * x * y;
         }
 
         public static Matrix RotationAngle(Vector3 r)
         {
-            var x = r.X * MathUtility.Angle2Rad;
-            var y = r.Y * MathUtility.Angle2Rad;
-            var z = r.Z * MathUtility.Angle2Rad;
+            var x = r.x * MathUtility.Angle2Rad;
+            var y = r.y * MathUtility.Angle2Rad;
+            var z = r.z * MathUtility.Angle2Rad;
             return Rotation(new Vector3(x,y,z));
         }
 
@@ -167,9 +167,9 @@ namespace SoftRenderer
         public static Matrix Scale(Vector3 s)
         {
             var values = new[] {
-                s.X, 0, 0, 0,
-                0, s.Y, 0, 0,
-                0, 0, s.Z, 0,
+                s.x, 0, 0, 0,
+                0, s.y, 0, 0,
+                0, 0, s.z, 0,
                 0, 0, 0, 1
             };
             return new Matrix(values);
@@ -181,7 +181,7 @@ namespace SoftRenderer
                 1, 0, 0, 0,
                 0, 1, 0, 0,
                 0, 0, 1, 0,
-                t.X, t.Y, t.Z, 1
+                t.x, t.y, t.z, 1
             };
             return new Matrix(values);
         }
@@ -219,10 +219,10 @@ namespace SoftRenderer
 
         public Vector3 ApplyTransfer(Vector3 v, bool div = false)
         {
-            var x = v.X * Values[0 * 4 + 0] + v.Y * Values[1 * 4 + 0] + v.Z * Values[2 * 4 + 0] + Values[3 * 4 + 0];
-            var y = v.X * Values[0 * 4 + 1] + v.Y * Values[1 * 4 + 1] + v.Z * Values[2 * 4 + 1] + Values[3 * 4 + 1];
-            var z = v.X * Values[0 * 4 + 2] + v.Y * Values[1 * 4 + 2] + v.Z * Values[2 * 4 + 2] + Values[3 * 4 + 2];
-            var w = v.X * Values[0 * 4 + 3] + v.Y * Values[1 * 4 + 3] + v.Z * Values[2 * 4 + 3] + Values[3 * 4 + 3];
+            var x = v.x * Values[0 * 4 + 0] + v.y * Values[1 * 4 + 0] + v.z * Values[2 * 4 + 0] + Values[3 * 4 + 0];
+            var y = v.x * Values[0 * 4 + 1] + v.y * Values[1 * 4 + 1] + v.z * Values[2 * 4 + 1] + Values[3 * 4 + 1];
+            var z = v.x * Values[0 * 4 + 2] + v.y * Values[1 * 4 + 2] + v.z * Values[2 * 4 + 2] + Values[3 * 4 + 2];
+            var w = v.x * Values[0 * 4 + 3] + v.y * Values[1 * 4 + 3] + v.z * Values[2 * 4 + 3] + Values[3 * 4 + 3];
             //return new Vector3(x / w, y / w, z / w);
             if (div && w != 0)
             {

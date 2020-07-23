@@ -33,12 +33,12 @@ namespace SoftRenderer
             cube1 = new GameObject("cube");
             var meshRenderer = cube1.AddComponent<MeshRenderer>();
             meshRenderer.mesh = CreateMesh();
-            cube1.transform.rotationAngle = new Vector3(45, 0, 45);
+            cube1.transform.rotationAngle = new Vector3(0, 45, 0);
             cube2 = new GameObject("cube");
-            var meshRenderer2 = cube2.AddComponent<MeshRenderer>();
-            meshRenderer2.mesh = CreateMesh();
-            cube2.transform.rotationAngle = new Vector3(45, 45, 45);
-            cube2.transform.position = new Vector3(5, 0, 0);
+//            var meshRenderer2 = cube2.AddComponent<MeshRenderer>();
+//            meshRenderer2.mesh = CreateMesh1();
+//            cube2.transform.rotationAngle = new Vector3(45, 45, 45);
+//            cube2.transform.position = new Vector3(5, 0, 0);
         }
 
         public void Update()
@@ -46,10 +46,10 @@ namespace SoftRenderer
             Vector3 rotation = cube1.transform.rotationAngle;
             temp += 1;
             temp %= 180;
-            rotation.Y = temp;
-            Debug.Log("rotation "+ rotation);
+            rotation.y = temp;
+            Debug.Log("rotation " + rotation);
             cube1.transform.rotationAngle = rotation;
-            cube2.transform.rotationAngle = rotation;
+            //            cube2.transform.rotationAngle = rotation;
         }
 
         public MeshRenderer CreateMeshRenderer()

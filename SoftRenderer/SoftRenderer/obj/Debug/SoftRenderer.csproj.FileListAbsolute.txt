@@ -24,3 +24,12 @@ F:\Projects\SoftRenderer\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.csproj
 F:\Projects\SoftRenderer\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.csproj.CoreCompileInputs.cache
 F:\Projects\SoftRenderer\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.exe
 F:\Projects\SoftRenderer\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.pdb
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\bin\Debug\SoftRenderer.exe.config
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\bin\Debug\SoftRenderer.exe
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\bin\Debug\SoftRenderer.pdb
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.csprojAssemblyReference.cache
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.Properties.Resources.resources
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.csproj.GenerateResource.cache
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.csproj.CoreCompileInputs.cache
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.exe
+F:\Projects\SoftRenderer\SoftRenderer-master\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.pdb

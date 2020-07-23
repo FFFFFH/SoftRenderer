@@ -11,8 +11,6 @@ namespace SoftRenderer
 
     public struct Vector3
     {
-       
-
         public Vector3(float x, float y, float z)
         {
             Values = new float[3];
@@ -21,7 +19,7 @@ namespace SoftRenderer
             Values[2] = z;
         }
 
-        public Vector3(float value)
+        public Vector3(float value = 0)
         {
             Values = new float[3];
             Values[0] = value;
@@ -41,19 +39,19 @@ namespace SoftRenderer
 
         public static Vector3 UnitZ => new Vector3(0, 0, 1);
 
-        public float X
+        public float x
         {
             get { return Values[0]; }
             set { Values[0] = value; }
         }
 
-        public float Y
+        public float y
         {
             get { return Values[1]; }
             set { Values[1] = value; }
         }
 
-        public float Z
+        public float z
         {
             get { return Values[2]; }
             set { Values[2] = value; }
@@ -64,12 +62,12 @@ namespace SoftRenderer
 
         public static implicit operator Point(Vector3 v)
         {
-            return new Point((int)v.X, (int)v.Y);
+            return new Point((int)v.x, (int)v.y);
         }
 
         public static implicit operator PointF(Vector3 v)
         {
-            return new PointF(v.X, v.Y);
+            return new PointF(v.x, v.y);
         }
 
         public static Vector3 operator -(Vector3 a, Vector3 b)
@@ -110,17 +108,17 @@ namespace SoftRenderer
 
         public static bool operator ==(Vector3 a, Vector3 b)
         {
-            return MathUtility.CompareFloat(a.X,b.X)
-                && MathUtility.CompareFloat(a.Y, b.Y)
-                && MathUtility.CompareFloat(a.Z, b.Z)
+            return MathUtility.IsEqual(a.x,b.x)
+                && MathUtility.IsEqual(a.y, b.y)
+                && MathUtility.IsEqual(a.z, b.z)
                 ;
         }
 
         public static bool operator !=(Vector3 a, Vector3 b)
         {
-            return !MathUtility.CompareFloat(a.X, b.X)
-              || !MathUtility.CompareFloat(a.Y, b.Y)
-              || !MathUtility.CompareFloat(a.Z, b.Z)
+            return !MathUtility.IsEqual(a.x, b.x)
+              || !MathUtility.IsEqual(a.y, b.y)
+              || !MathUtility.IsEqual(a.z, b.z)
               ;
         }
 
@@ -139,12 +137,12 @@ namespace SoftRenderer
 
         public Vector3 Cross(Vector3 v)
         {
-            return new Vector3(Y * v.Z - Z * v.Y, Z * v.X - X * v.Z, X * v.Y - Y * v.X);
+            return new Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
         }
 
         public float Dot(Vector3 v)
         {
-            return X * v.X + Y * v.Y + Z * v.Z;
+            return x * v.x + y * v.y + z * v.z;
         }
 
         public Vector3 Interpolate(Vector3 v, float factor)
@@ -159,12 +157,12 @@ namespace SoftRenderer
             {
                 factor = 1.0f / length;
             }
-            return new Vector3(X * factor, Y * factor, Z * factor);
+            return new Vector3(x * factor, y * factor, z * factor);
         }
 
         public Vector3 Copy()
         {
-            return new Vector3(X,Y,Z);
+            return new Vector3(x,y,z);
         }
 
         public Vector3 ApplyTransfer(Matrix matrix, bool div = false)
@@ -174,7 +172,7 @@ namespace SoftRenderer
 
         public override string ToString()
         {
-            return $"x : {X}, y : {Y}, z : {Z}";
+            return $"x : {x}, y : {y}, z : {z}";
         }
 
     }

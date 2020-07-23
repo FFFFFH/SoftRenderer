@@ -55,7 +55,7 @@
     <Compile Include="GraphicsDevice.cs" />
     <Compile Include="MathCls\MathUtility.cs" />
     <Compile Include="MathCls\Matrix.cs" />
-    <Compile Include="MathCls\Debug.cs" />
+    <Compile Include="Debug.cs" />
     <Compile Include="MathCls\Vector3.cs" />
     <Compile Include="Mesh.cs" />
     <Compile Include="Renderer\MeshRenderer.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Renderer\Renderer.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="BaseCls\Transform.cs" />
+    <Compile Include="Utility\TransformUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

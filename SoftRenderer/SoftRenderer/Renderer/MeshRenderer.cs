@@ -12,7 +12,7 @@ namespace SoftRenderer
         public Mesh mesh;
 
         public override void Render()
-        {
+        {//mesh.Surfaces.Length
             if (mesh == null) return;
             for (int i = 0; i < mesh.Surfaces.Length; i++)
             {
@@ -23,7 +23,12 @@ namespace SoftRenderer
                 Vector3 p1 = transform.ApplyTransfer(v1);
                 Vector3 p2 = transform.ApplyTransfer(v2);
                 Vector3 p3 = transform.ApplyTransfer(v3);
-                graphics.DrawTriangle(p1, p2, p3, Color.Red);
+                Vector3 sp1 = TransformUtility.ComputeToScreenPos(p1);
+                Vector3 sp2 = TransformUtility.ComputeToScreenPos(p2);
+                Vector3 sp3 = TransformUtility.ComputeToScreenPos(p3);
+                graphics.FillTriangle(sp1, sp2, sp3, Color.Red);
+                //graphics.FillBottomFlatTriangle(sp3, sp2,sp1,Color.Red);
+                //graphics.DrawTriangleLine(sp1, sp2, sp3, Color.Red);
             }
         }
 
