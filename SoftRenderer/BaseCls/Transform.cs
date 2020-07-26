@@ -98,5 +98,19 @@ namespace SoftRenderer
             return v3;
         }
 
+        public Vector3 ApplyObj2World(Vector3 point)
+        {
+            return point.ApplyTransfer(object2world);
+        }
+
+        public Vector3 ApplyWorldToView(Vector3 point)
+        {
+            return point.ApplyTransfer(world2View);
+        }
+
+        public Vector3 ApplyViewToClip(Vector3 point)
+        {
+            return point.ApplyTransfer(viewToClip, true);
+        }
     }
 }

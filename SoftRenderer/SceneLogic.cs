@@ -1,62 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SoftRenderer
 {
-    //这里相当于CPU端，准备数据然后送到GPU渲染出来
-    public class GameLogic
+    public class SceneLogic
     {
-        private static GameLogic m_Instance;
+        private static SceneLogic m_Instance;
 
-        public static GameLogic Instance
+        public static SceneLogic Instance
         {
             get
             {
                 if (m_Instance == null)
                 {
-                    m_Instance = new GameLogic();
+                    m_Instance = new SceneLogic();
                 }
                 return m_Instance;
             }
         }
-        private float temp = 0;
+        private float rotateStep = 0;
+
+        private float moveStep = 0;
+
+        private Vector3 camVelocity;
 
         private GameObject cube1;
         private GameObject cube2;
         public void Init()
         {
+            Application.RenderType = RenderType.GradientColor;
             Camera camera = Camera.main;
             camera.transform.position = new Vector3(0, 0, -10);
-            cube1 = new GameObject("cube");
+            cube1 = new GameObject("cube1");
             var meshRenderer = cube1.AddComponent<MeshRenderer>();
             meshRenderer.mesh = CreateMesh();
-            cube1.transform.rotationAngle = new Vector3(0, 45, 0);
-            cube2 = new GameObject("cube");
-//            var meshRenderer2 = cube2.AddComponent<MeshRenderer>();
-//            meshRenderer2.mesh = CreateMesh1();
-//            cube2.transform.rotationAngle = new Vector3(45, 45, 45);
-//            cube2.transform.position = new Vector3(5, 0, 0);
+            cube1.transform.rotationAngle = new Vector3(45, -80, 45);
+            cube1.transform.position = new Vector3(-2, 0, 0);
+            //cube2 = new GameObject("cube2");
+            //var meshRenderer2 = cube2.AddComponent<MeshRenderer>();
+            //meshRenderer2.mesh = CreateMesh();
+            //cube2.transform.rotationAngle = new Vector3(45, 45, 45);
+            //cube2.transform.position = new Vector3(2, 0, 0);
+
+            camVelocity = new Vector3(0, 0, -0.1f);
         }
 
         public void Update()
         {
-            Vector3 rotation = cube1.transform.rotationAngle;
-            temp += 1;
-            temp %= 180;
-            rotation.y = temp;
-            Debug.Log("rotation " + rotation);
-            cube1.transform.rotationAngle = rotation;
-            //            cube2.transform.rotationAngle = rotation;
+            RotateCube1();
+            //MoveCamera();
         }
 
-        public MeshRenderer CreateMeshRenderer()
+        private void RotateCube1()
         {
-            Mesh mesh = CreateMesh2();
-            MeshRenderer meshRenderer = new MeshRenderer();
-            return meshRenderer;
+            Vector3 rotation = cube1.transform.rotationAngle;
+            float r = rotation.y += 0.5f;
+            r %= 360;
+            rotation.y = r;
+            cube1.transform.rotationAngle = rotation;
+        }
+
+        private void MoveCamera()
+        {
+            var camPos = Camera.main.transform.position;
+
+            if ((camPos.z < -20 && camVelocity.z < 0)
+                || camPos.z > -10 && camVelocity.z > 0)
+            {
+                camVelocity.z = -camVelocity.z;
+            }
+            camPos.z += camVelocity.z;
+            Camera.main.transform.position = camPos;
         }
 
         private Mesh CreateMesh1()
@@ -87,7 +105,8 @@ namespace SoftRenderer
             //surfaces[3].B = 5;
             //surfaces[3].C = 2;
 
-            return new Mesh(vects, surfaces);
+            //return new Mesh(vects, surfaces);
+            return null;
         }
 
         private Mesh CreateMesh2()
@@ -102,20 +121,20 @@ namespace SoftRenderer
             surfaces[0].C = 2;
 
 
-            return new Mesh(vects, surfaces);
+            return null;
         }
 
         private Mesh CreateMesh()
         {
-            Vector3[] vects = new Vector3[8];
-            vects[0] = new Vector3(-1, -1, -1);
-            vects[1] = new Vector3(1, -1, -1);
-            vects[2] = new Vector3(1, 1, -1);
-            vects[3] = new Vector3(-1, 1, -1);
-            vects[4] = new Vector3(1, -1, 1);
-            vects[5] = new Vector3(1, 1, 1);
-            vects[6] = new Vector3(-1, -1, 1);
-            vects[7] = new Vector3(-1, 1, 1);
+            Vertex[] vertices = new Vertex[8];
+            vertices[0] = new Vertex(new Vector3(-1, -1, -1), Color.Red);
+            vertices[1] = new Vertex(new Vector3(1, -1, -1), Color.Green);
+            vertices[2] = new Vertex(new Vector3(1, 1, -1), Color.Peru);
+            vertices[3] = new Vertex(new Vector3(-1, 1, -1), Color.Green);
+            vertices[4] = new Vertex(new Vector3(1, -1, 1), Color.Pink);
+            vertices[5] = new Vertex(new Vector3(1, 1, 1), Color.YellowGreen);
+            vertices[6] = new Vertex(new Vector3(-1, -1, 1), Color.Yellow);
+            vertices[7] = new Vertex(new Vector3(-1, 1, 1), Color.Blue);
 
             Surface[] surfaces = new Surface[12];
             surfaces[0].A = 0;
@@ -160,8 +179,7 @@ namespace SoftRenderer
             surfaces[11].B = 6;
             surfaces[11].C = 4;
 
-
-            Mesh mesh = new Mesh(vects, surfaces);
+            Mesh mesh = new Mesh(vertices, surfaces);
             return mesh;
         }
 

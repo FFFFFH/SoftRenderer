@@ -160,6 +160,19 @@ namespace SoftRenderer
             return new Vector3(x * factor, y * factor, z * factor);
         }
 
+        public static Vector3 Cross(Vector3 lhs, Vector3 rhs)
+        {
+            float x = lhs.y * rhs.z - lhs.z * rhs.y;
+            float y = lhs.z * rhs.x - lhs.x * rhs.z;
+            float z = lhs.x * rhs.y - lhs.y * rhs.x;
+            return new Vector3(x, y, z);
+        }
+
+        public static float Dot(Vector3 v1, Vector3 v2)
+        {
+            return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+        }
+
         public Vector3 Copy()
         {
             return new Vector3(x,y,z);

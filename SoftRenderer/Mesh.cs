@@ -8,17 +8,14 @@ namespace SoftRenderer
 {
     public class Mesh
     {
-        public Vector3 Position { get; set; } = Vector3.Zero;
-        public Vector3 Rotation { get; set; } = Vector3.Zero;
         public Surface[] Surfaces { get; private set; }
-        public Vector3[] Vertices { get; private set; }
+        public Vertex[] Vertices { get; private set; }
 
-        public Mesh(Vector3[] vertices, Surface[] surfaces)
+        public Mesh(Vertex[] vertices, Surface[] surfaces)
         {
             Vertices = vertices;
             Surfaces = surfaces;
         }
-
     }
 
     public struct Surface

@@ -11,17 +11,27 @@ using System.Windows.Forms;
 
 namespace SoftRenderer
 {
+    public enum RenderType
+    {
+        Wireframe,
+        Fill,
+        GradientColor,
+    }
+
     class Application
     {
-        public Form form; //窗口
+        public static GraphicsDevice GraphicsDevice;
+        public static RenderType RenderType = RenderType.Fill;
+
+        private Form form; //窗口
         private GraphicsBuffer buffer; //双缓冲
     
         private Font defaultFont;
         private const int targetFPS = 30;
         private readonly TimeSpan maxElapsedTime = TimeSpan.FromMilliseconds(1000.0 / targetFPS);
         private Debug debug;
-        public static GraphicsDevice GraphicsDevice;
         private static List<Renderer> Renderers = new List<Renderer>();
+
 
         public Application()
         {
@@ -46,7 +56,7 @@ namespace SoftRenderer
             var deltaTime = TimeSpan.FromMilliseconds(1000.0 / 60);
 
             Debug.Init(buffer.BackGroundGraphicsDevice);
-            GameLogic.Instance.Init();
+            SceneLogic.Instance.Init();
             while (!form.IsDisposed)
             {
                 stopwatch.Start();
@@ -54,7 +64,7 @@ namespace SoftRenderer
                 Debug.ClearLogs();
                 Application.GraphicsDevice = buffer.BackGroundGraphicsDevice;
 
-                GameLogic.Instance.Update();
+                SceneLogic.Instance.Update();
 
                 Render(); 
 
