@@ -94,8 +94,8 @@ namespace SoftRenderer
             Vertex rightBottomVert = v2.pos.x > v3.pos.x ? v2 : v3;
 
             Vector3 p1 = v1.pos;
-            Vector3 p2 = leftBottomVert.pos.x < rightBottomVert.pos.x ? leftBottomVert.pos : rightBottomVert.pos;
-            Vector3 p3 = leftBottomVert.pos.x > rightBottomVert.pos.x ? leftBottomVert.pos : rightBottomVert.pos;
+            Vector3 p2 = leftBottomVert.pos;
+            Vector3 p3 = rightBottomVert.pos;
             float invSlope1 = (p2.x - p1.x) / (p2.y - p1.y);
             float invSlope2 = (p3.x - p1.x) / (p3.y - p1.y);
             float onePerLength = 1/(p2.y - p1.y);
@@ -112,8 +112,15 @@ namespace SoftRenderer
                 Color rightColor = ColorUtility.Lerp(rightBottom, top, (p2.y - scanLineY) * onePerLength);
                 Color leftColor = ColorUtility.Lerp(leftBottom, top, (p2.y - scanLineY) * onePerLength);
                 DrawScaneLine((int)curX1, (int)curX2, scanLineY, leftColor, rightColor);
-                curX1 += invSlope1;
-                curX2 += invSlope2;
+                //避免绘制非常窄的三角形时线段出界
+                if ((invSlope1 < 0 && curX1 + invSlope1 >= p2.x) || (invSlope1 > 0 && curX1 + invSlope1 <= p2.x))
+                {
+                    curX1 += invSlope1;
+                }
+                if ((invSlope2 < 0 && curX2 + invSlope2 >= p3.x) || (invSlope2 > 0 && curX2 + invSlope2 <= p3.x))
+                {
+                    curX2 += invSlope2;
+                }
             }
         }
 
@@ -123,8 +130,8 @@ namespace SoftRenderer
             Vertex leftTopVert = v1.pos.x < v2.pos.x ? v1 : v2;
             Vertex rightTopVert = v1.pos.x > v2.pos.x ? v1 : v2;
 
-            Vector3 p1 = v1.pos.x < v2.pos.x ? v1.pos : v2.pos;
-            Vector3 p2 = v1.pos.x > v2.pos.x ? v1.pos : v2.pos;
+            Vector3 p1 = leftTopVert.pos;
+            Vector3 p2 = rightTopVert.pos;
             Vector3 p3 = v3.pos;
             float invSlope1 = (p3.x - p1.x) / (p3.y - p1.y);
             float invSlope2 = (p3.x - p2.x) / (p3.y - p2.y);
@@ -141,8 +148,15 @@ namespace SoftRenderer
                 Color rightColor = ColorUtility.Lerp(rightTop, bottom, (scanLineY - p1.y) * onePerLength);
                 Color leftColor = ColorUtility.Lerp(leftTop, bottom, (scanLineY - p1.y) * onePerLength);
                 DrawScaneLine((int)curX1, (int)curX2, scanLineY, leftColor, rightColor);
-                curX1 -= invSlope1;
-                curX2 -= invSlope2;
+
+                if ((invSlope1 > 0 && curX1 - invSlope1 >= p1.x) || (invSlope1 < 0 && curX1 - invSlope1 <= p1.x))
+                {
+                    curX1 -= invSlope1;
+                }
+                if ((invSlope2 < 0 && curX2 - invSlope2 <= p2.x) || (invSlope2 > 0 && curX2 - invSlope2 >= p2.x))
+                {
+                    curX2 -= invSlope2;
+                }
             }
         }
 
@@ -166,6 +180,7 @@ namespace SoftRenderer
                 Color color = ColorUtility.Lerp(verts[0].color, verts[2].color, (verts[1].pos.y - verts[0].pos.y) / (verts[2].pos.y - verts[0].pos.y));
                 v4.pos = new Vector3(x, y, verts[1].pos.z);
                 v4.color = color;
+
                 FillBottomFlatTriangle(verts[0], verts[1], v4);
                 FillTopFlatTriangle(verts[1], v4, verts[2]);
                 //DrawLine(v1.pos, v4.pos, Color.Yellow);

@@ -38,8 +38,8 @@ namespace SoftRenderer
             cube1 = new GameObject("cube1");
             var meshRenderer = cube1.AddComponent<MeshRenderer>();
             meshRenderer.mesh = CreateMesh();
-            cube1.transform.rotationAngle = new Vector3(45, -80, 45);
-            cube1.transform.position = new Vector3(-2, 0, 0);
+            cube1.transform.rotationAngle = new Vector3(45, 90, 30);
+            cube1.transform.position = new Vector3(0, 0, 0);
             //cube2 = new GameObject("cube2");
             //var meshRenderer2 = cube2.AddComponent<MeshRenderer>();
             //meshRenderer2.mesh = CreateMesh();
@@ -58,7 +58,7 @@ namespace SoftRenderer
         private void RotateCube1()
         {
             Vector3 rotation = cube1.transform.rotationAngle;
-            float r = rotation.y += 0.5f;
+            float r = rotation.y + 2;
             r %= 360;
             rotation.y = r;
             cube1.transform.rotationAngle = rotation;
@@ -128,11 +128,11 @@ namespace SoftRenderer
         {
             Vertex[] vertices = new Vertex[8];
             vertices[0] = new Vertex(new Vector3(-1, -1, -1), Color.Red);
-            vertices[1] = new Vertex(new Vector3(1, -1, -1), Color.Green);
+            vertices[1] = new Vertex(new Vector3(1, -1, -1), Color.Cornsilk);
             vertices[2] = new Vertex(new Vector3(1, 1, -1), Color.Peru);
             vertices[3] = new Vertex(new Vector3(-1, 1, -1), Color.Green);
-            vertices[4] = new Vertex(new Vector3(1, -1, 1), Color.Pink);
-            vertices[5] = new Vertex(new Vector3(1, 1, 1), Color.YellowGreen);
+            vertices[4] = new Vertex(new Vector3(1, -1, 1), Color.Brown);
+            vertices[5] = new Vertex(new Vector3(1, 1, 1), Color.Cyan);
             vertices[6] = new Vertex(new Vector3(-1, -1, 1), Color.Yellow);
             vertices[7] = new Vertex(new Vector3(-1, 1, 1), Color.Blue);
 

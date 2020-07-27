@@ -42,3 +42,12 @@ D:\MyGithub\SoftRenderer\SoftRenderer\obj\Debug\SoftRenderer.pdb
 D:\MyGithub\SoftRenderer\SoftRenderer\bin\Debug\SoftRenderer.exe.config
 D:\MyGithub\SoftRenderer\SoftRenderer\bin\Debug\SoftRenderer.exe
 D:\MyGithub\SoftRenderer\SoftRenderer\bin\Debug\SoftRenderer.pdb
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\obj\Debug\SoftRenderer.csprojAssemblyReference.cache
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\obj\Debug\SoftRenderer.Properties.Resources.resources
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\obj\Debug\SoftRenderer.csproj.GenerateResource.cache
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\obj\Debug\SoftRenderer.csproj.CoreCompileInputs.cache
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\obj\Debug\SoftRenderer.exe
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\obj\Debug\SoftRenderer.pdb
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\bin\Debug\SoftRenderer.exe.config
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\bin\Debug\SoftRenderer.exe
+D:\MyGithub\SoftwareRenderer\SoftwareRenderer\SoftRenderer\bin\Debug\SoftRenderer.pdb
