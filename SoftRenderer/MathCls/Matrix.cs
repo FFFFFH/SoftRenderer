@@ -30,7 +30,7 @@ namespace SoftRenderer
 
         public float[] Values { get; }
 
-        public static Matrix LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
+        public static Matrix LookAtLH(Vector eye, Vector target, Vector up)
         {
             var axisZ = (target - eye).Normalize();
             var axisX = up.Cross(axisZ).Normalize();
@@ -91,7 +91,7 @@ namespace SoftRenderer
             });
         }
 
-        public static Matrix Rotation(Vector3 r)
+        public static Matrix Rotation(Vector r)
         {
             var x = RotationX(r.x);
             var y = RotationY(r.y);
@@ -99,12 +99,12 @@ namespace SoftRenderer
             return z * x * y;
         }
 
-        public static Matrix RotationAngle(Vector3 r)
+        public static Matrix RotationAngle(Vector r)
         {
             var x = r.x * MathUtility.Angle2Rad;
             var y = r.y * MathUtility.Angle2Rad;
             var z = r.z * MathUtility.Angle2Rad;
-            return Rotation(new Vector3(x,y,z));
+            return Rotation(new Vector(x,y,z));
         }
 
         public static Matrix RotationX(float rad)
@@ -164,7 +164,7 @@ namespace SoftRenderer
             return RotationZ(rad);
         }
 
-        public static Matrix Scale(Vector3 s)
+        public static Matrix Scale(Vector s)
         {
             var values = new[] {
                 s.x, 0, 0, 0,
@@ -175,7 +175,7 @@ namespace SoftRenderer
             return new Matrix(values);
         }
 
-        public static Matrix Translation(Vector3 t)
+        public static Matrix Translation(Vector t)
         {
             var values = new[] {
                 1, 0, 0, 0,
@@ -217,21 +217,13 @@ namespace SoftRenderer
             return Values?.GetHashCode() ?? 0;
         }
 
-        public Vector3 ApplyTransfer(Vector3 v, bool div = false)
+        public Vector ApplyTransfer(Vector v)
         {
             var x = v.x * Values[0 * 4 + 0] + v.y * Values[1 * 4 + 0] + v.z * Values[2 * 4 + 0] + Values[3 * 4 + 0];
             var y = v.x * Values[0 * 4 + 1] + v.y * Values[1 * 4 + 1] + v.z * Values[2 * 4 + 1] + Values[3 * 4 + 1];
             var z = v.x * Values[0 * 4 + 2] + v.y * Values[1 * 4 + 2] + v.z * Values[2 * 4 + 2] + Values[3 * 4 + 2];
             var w = v.x * Values[0 * 4 + 3] + v.y * Values[1 * 4 + 3] + v.z * Values[2 * 4 + 3] + Values[3 * 4 + 3];
-            //return new Vector3(x / w, y / w, z / w);
-            if (div && w != 0)
-            {
-                return new Vector3(x / w, y / w, z / w);
-            }
-            else
-            {
-                return new Vector3(x, y, z);
-            }
+            return new Vector(x, y, z, w);
         }
     }
 }

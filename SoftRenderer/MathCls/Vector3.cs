@@ -9,35 +9,37 @@ using CompareFloat = SoftRenderer.MathUtility;
 namespace SoftRenderer
 {
 
-    public struct Vector3
+    public struct Vector
     {
-        public Vector3(float x, float y, float z)
+        public Vector(float x, float y, float z, float w = 0)
         {
-            Values = new float[3];
+            Values = new float[4];
             Values[0] = x;
             Values[1] = y;
             Values[2] = z;
+            Values[3] = w;
         }
 
-        public Vector3(float value = 0)
+        public Vector(float value = 0)
         {
-            Values = new float[3];
+            Values = new float[4];
             Values[0] = value;
             Values[1] = value;
             Values[2] = value;
+            Values[3] = value;
         }
 
         public float Length =>
             (float)System.Math.Sqrt(Values[0] * Values[0] + Values[1] * Values[1] + Values[2] * Values[2])
             ;
 
-        public static Vector3 One => new Vector3(1);
+        public static Vector One => new Vector(1);
 
-        public static Vector3 UnitX => new Vector3(1, 0, 0);
+        public static Vector UnitX => new Vector(1, 0, 0);
 
-        public static Vector3 UnitY => new Vector3(0, 1, 0);
+        public static Vector UnitY => new Vector(0, 1, 0);
 
-        public static Vector3 UnitZ => new Vector3(0, 0, 1);
+        public static Vector UnitZ => new Vector(0, 0, 1);
 
         public float x
         {
@@ -56,23 +58,29 @@ namespace SoftRenderer
             get { return Values[2]; }
             set { Values[2] = value; }
         }
+        
+        public float w
+        {
+            get { return Values[3]; }
+            set { Values[3] = value; }
+        }
 
-        public static Vector3 Zero => new Vector3(0);
+        public static Vector Zero => new Vector(0);
         private float[] Values { get; }
 
-        public static implicit operator Point(Vector3 v)
+        public static implicit operator Point(Vector v)
         {
             return new Point((int)v.x, (int)v.y);
         }
 
-        public static implicit operator PointF(Vector3 v)
+        public static implicit operator PointF(Vector v)
         {
             return new PointF(v.x, v.y);
         }
 
-        public static Vector3 operator -(Vector3 a, Vector3 b)
+        public static Vector operator -(Vector a, Vector b)
         {
-            return new Vector3(0)
+            return new Vector(0)
             {
                 Values = {
                     [0] = a.Values[0] - b.Values[0],
@@ -82,9 +90,9 @@ namespace SoftRenderer
             };
         }
 
-        public static Vector3 operator *(Vector3 a, float factor)
+        public static Vector operator *(Vector a, float factor)
         {
-            return new Vector3(0)
+            return new Vector(0)
             {
                 Values = {
                     [0] = a.Values[0]*factor,
@@ -94,9 +102,9 @@ namespace SoftRenderer
             };
         }
 
-        public static Vector3 operator /(Vector3 a, float factor)
+        public static Vector operator /(Vector a, float factor)
         {
-            return new Vector3(0)
+            return new Vector(0)
             {
                 Values = {
                     [0] = a.Values[0]/factor,
@@ -106,7 +114,7 @@ namespace SoftRenderer
             };
         }
 
-        public static bool operator ==(Vector3 a, Vector3 b)
+        public static bool operator ==(Vector a, Vector b)
         {
             return MathUtility.IsEqual(a.x,b.x)
                 && MathUtility.IsEqual(a.y, b.y)
@@ -114,7 +122,7 @@ namespace SoftRenderer
                 ;
         }
 
-        public static bool operator !=(Vector3 a, Vector3 b)
+        public static bool operator !=(Vector a, Vector b)
         {
             return !MathUtility.IsEqual(a.x, b.x)
               || !MathUtility.IsEqual(a.y, b.y)
@@ -123,9 +131,9 @@ namespace SoftRenderer
         }
 
 
-        public static Vector3 operator +(Vector3 a, Vector3 b)
+        public static Vector operator +(Vector a, Vector b)
         {
-            return new Vector3(0)
+            return new Vector(0)
             {
                 Values = {
                     [0] = a.Values[0] + b.Values[0],
@@ -135,21 +143,21 @@ namespace SoftRenderer
             };
         }
 
-        public Vector3 Cross(Vector3 v)
+        public Vector Cross(Vector v)
         {
-            return new Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+            return new Vector(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
         }
 
-        public float Dot(Vector3 v)
+        public float Dot(Vector v)
         {
             return x * v.x + y * v.y + z * v.z;
         }
 
-        public Vector3 Interpolate(Vector3 v, float factor)
+        public Vector Interpolate(Vector v, float factor)
         {
             return this + (v - this) * factor;
         }
-        public Vector3 Normalize()
+        public Vector Normalize()
         {
             var length = Length;
             var factor = 0f;
@@ -157,35 +165,35 @@ namespace SoftRenderer
             {
                 factor = 1.0f / length;
             }
-            return new Vector3(x * factor, y * factor, z * factor);
+            return new Vector(x * factor, y * factor, z * factor);
         }
 
-        public static Vector3 Cross(Vector3 lhs, Vector3 rhs)
+        public static Vector Cross(Vector lhs, Vector rhs)
         {
             float x = lhs.y * rhs.z - lhs.z * rhs.y;
             float y = lhs.z * rhs.x - lhs.x * rhs.z;
             float z = lhs.x * rhs.y - lhs.y * rhs.x;
-            return new Vector3(x, y, z);
+            return new Vector(x, y, z);
         }
 
-        public static float Dot(Vector3 v1, Vector3 v2)
+        public static float Dot(Vector v1, Vector v2)
         {
             return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
         }
 
-        public Vector3 Copy()
+        public Vector Copy()
         {
-            return new Vector3(x,y,z);
+            return new Vector(x,y,z);
         }
 
-        public Vector3 ApplyTransfer(Matrix matrix, bool div = false)
+        public Vector ApplyTransfer(Matrix matrix)
         {
-            return matrix.ApplyTransfer(this, div); 
+            return matrix.ApplyTransfer(this); 
         }
 
         public override string ToString()
         {
-            return $"x : {x}, y : {y}, z : {z}";
+            return $"x : {x}, y : {y}, z : {z} w : {w}";
         }
 
     }

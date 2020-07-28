@@ -15,23 +15,21 @@ namespace SoftRenderer
     {
         Wireframe,
         Fill,
-        GradientColor,
+        VertexColor,
+        Texture,
     }
 
     class Application
     {
         public static GraphicsDevice GraphicsDevice;
-        public static RenderType RenderType = RenderType.Fill;
-
+        public static RenderType RenderType;
+        public static Texture2D Texture;
         private Form form; //窗口
         private GraphicsBuffer buffer; //双缓冲
-    
         private Font defaultFont;
         private const int targetFPS = 30;
         private readonly TimeSpan maxElapsedTime = TimeSpan.FromMilliseconds(1000.0 / targetFPS);
-        private Debug debug;
         private static List<Renderer> Renderers = new List<Renderer>();
-
 
         public Application()
         {
@@ -129,5 +127,7 @@ namespace SoftRenderer
                 renderer.Render();
             }
         }
+
+
     }
 }

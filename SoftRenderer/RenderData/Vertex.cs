@@ -9,9 +9,9 @@ namespace SoftRenderer
 {
     public class Vertex
     {
-        private Vector3 m_Pos;
+        private Vector m_Pos;
 
-        public Vector3 pos
+        public Vector pos
         {
             get
             {
@@ -33,10 +33,12 @@ namespace SoftRenderer
 
         public Vertex() { }
 
-        public Vertex(Vector3 _pos, Color _color)
+        public Vertex(Vector _pos, Color _color, float _u = 0, float _v = 0)
         {
             m_Pos = _pos;
             color = _color;
+            u = _u;
+            v = _v;
         }
 
         public void Copy(Vertex _vertex)

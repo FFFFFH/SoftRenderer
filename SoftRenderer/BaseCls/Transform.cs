@@ -9,10 +9,10 @@ namespace SoftRenderer
     //目前此类的父类是世界结点，可以拓展为自定义父节点
     public class Transform
     {
-        private Vector3 m_Position;
+        private Vector m_Position;
 
         //世界坐标
-        public Vector3 position
+        public Vector position
         {
             set
             {
@@ -23,10 +23,10 @@ namespace SoftRenderer
             get => m_Position.Copy();
         }
 
-        private Vector3 m_RotationAngle;
+        private Vector m_RotationAngle;
 
         //世界坐标下的旋转
-        public Vector3 rotationAngle
+        public Vector rotationAngle
         {
             set
             {
@@ -37,9 +37,9 @@ namespace SoftRenderer
             get => m_RotationAngle.Copy();
         }
 
-        private Vector3 m_LocalScale;
+        private Vector m_LocalScale;
 
-        public Vector3 localScale
+        public Vector localScale
         {
             set
             {
@@ -69,9 +69,9 @@ namespace SoftRenderer
 
         private void Init()
         {
-            m_Position = Vector3.Zero;
-            m_RotationAngle = Vector3.Zero;
-            m_LocalScale = Vector3.One;
+            m_Position = Vector.Zero;
+            m_RotationAngle = Vector.Zero;
+            m_LocalScale = Vector.One;
             scaleMatrix = Matrix.Identity;
             translateMatrix = Matrix.Identity;
             rotateMatrix = Matrix.Identity;
@@ -88,29 +88,29 @@ namespace SoftRenderer
             object2world = scaleMatrix * rotateMatrix * translateMatrix;
         }
 
-        public Vector3 ApplyTransfer(Vector3 point)
+        public Vector ApplyTransfer(Vector point)
         {
             //return point.ApplyTransfer(object2world).ApplyTransfer(world2View).ApplyTransfer(viewToClip, true);
 
-            Vector3 v1 = point.ApplyTransfer(object2world);
-            Vector3 v2 = v1.ApplyTransfer(world2View);
-            Vector3 v3 = v2.ApplyTransfer(viewToClip,true);
+            Vector v1 = point.ApplyTransfer(object2world);
+            Vector v2 = v1.ApplyTransfer(world2View);
+            Vector v3 = v2.ApplyTransfer(viewToClip);
             return v3;
         }
 
-        public Vector3 ApplyObj2World(Vector3 point)
+        public Vector ApplyObj2World(Vector point)
         {
             return point.ApplyTransfer(object2world);
         }
 
-        public Vector3 ApplyWorldToView(Vector3 point)
+        public Vector ApplyWorldToView(Vector point)
         {
             return point.ApplyTransfer(world2View);
         }
 
-        public Vector3 ApplyViewToClip(Vector3 point)
+        public Vector ApplyViewToClip(Vector point)
         {
-            return point.ApplyTransfer(viewToClip, true);
+            return viewToClip.ApplyTransfer(point);
         }
     }
 }

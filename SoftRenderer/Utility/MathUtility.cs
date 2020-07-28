@@ -29,5 +29,21 @@ namespace SoftRenderer
             return value;
         }
 
+        public static float Lerp(float a, float b, float t)
+        {
+            if (t <= 0) return a;
+            if (t >= 1) return b;
+            return b * t + (1 - t) * a;
+        }
+
+        public static Vector Lerp(Vector a, Vector b, float t)
+        {
+            Vector vec = Vector.Zero;
+            vec.x = MathUtility.Lerp(a.x, b.x, t);
+            vec.y = MathUtility.Lerp(a.y, b.y, t);
+            vec.z = MathUtility.Lerp(a.z, b.z, t);
+            return vec;
+        }
+
     }
 }

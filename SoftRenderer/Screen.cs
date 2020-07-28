@@ -10,9 +10,9 @@ namespace SoftRenderer
     {
         public static int width = 1024;
         public static int height = 512;
-        public static Vector3 ComputeToScreenPos(Vector3 p)
+        public static Vector ComputeToScreenPos(Vector p)
         {
-            return new Vector3(Screen.width / 2 + (p.x * Screen.width / 2),
+            return new Vector(Screen.width / 2 + (p.x * Screen.width / 2),
                 Screen.height / 2 - (p.y * Screen.height / 2), p.z);
         }
     }

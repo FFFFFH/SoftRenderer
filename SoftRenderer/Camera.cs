@@ -25,13 +25,13 @@ namespace SoftRenderer
 
         public Matrix GetWorldToView()
         {
-            Vector3 cameraPos = transform.position;
+            Vector cameraPos = transform.position;
 
             //TODO: 由摄像机的朝向计算
-            Vector3 targetPos = new Vector3(0, 0, 0);
+            Vector targetPos = new Vector(0, 0, 0);
 
             //TODO: 由摄像机的朝向计算
-            Vector3 upDir = new Vector3(0, 1, 0);
+            Vector upDir = new Vector(0, 1, 0);
 
             return Matrix.LookAtLH(cameraPos,
                 targetPos, upDir);

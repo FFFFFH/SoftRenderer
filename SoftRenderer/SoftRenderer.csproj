@@ -48,12 +48,13 @@
   <ItemGroup>
     <Compile Include="BaseCls\Component.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="RenderData\Texture2D.cs" />
     <Compile Include="SceneLogic.cs" />
     <Compile Include="BaseCls\GameObject.cs" />
     <Compile Include="GraphicsBuffer.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="GraphicsDevice.cs" />
-    <Compile Include="MathCls\MathUtility.cs" />
+    <Compile Include="Utility\MathUtility.cs" />
     <Compile Include="MathCls\Matrix.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="MathCls\Vector3.cs" />
